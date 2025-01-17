@@ -1,0 +1,55 @@
+.board-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+  }
+  
+  .game-board {
+    display: flex;
+    background-color: #004487;
+    padding: 10px;
+    border-radius: 10px;
+    gap: 5px;
+  }
+  
+  .column {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .column:hover {
+    background-color: #0060c0;
+  }
+  
+  .cell {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: white;
+    transition: background-color 0.3s;
+  }
+  
+  .player1 {
+    background-color: #ff4444;
+  }
+  
+  .player2 {
+    background-color: #fffc44;
+  }
+  
+  .game-status {
+    margin-top: 20px;
+    font-size: 24px;
+    font-weight: bold;
+  }
+
+  .player-turn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+  }

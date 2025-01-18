@@ -22,7 +22,6 @@ app.post('/clear-board', (req: Request, res: Response) => {
 
 app.post('/play-move', (req: Request, res: Response) => {
   const { column } = req.body
-  console.log(`received play move with column: ${column}`)
   
   if (typeof column !== 'number' || column < 0 || column > 6) {
     res.status(400).json({ error: 'Invalid column index. Must be between 0 and 6.' });

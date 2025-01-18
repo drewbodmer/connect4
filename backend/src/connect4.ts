@@ -24,7 +24,6 @@ export class Connect4 {
 
     private findRow(col: number): number {
         for (let row = 0; row < this.cols; row++) {
-            console.log(`row: ${row}, filled: ${this.board[col][row]}`)
             if (this.board[col][row] > 0) {
                 return row - 1
             }

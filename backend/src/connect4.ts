@@ -86,7 +86,6 @@ export class Connect4 {
         }
 
         const row: number = this.findRow(col);
-        console.log(`found coordinates: col: ${col}, row: ${row}`)
         this.board[col][row] = this.turn % 2 + 1;
 
         this.result = this.checkWinOrDraw(col, row);

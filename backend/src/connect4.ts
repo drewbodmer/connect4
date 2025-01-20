@@ -34,7 +34,7 @@ export class Connect4 {
     constructor() { }
 
     private findRow(board: number[][], col: number): number {
-        for (let row = 0; row < this.cols; row++) {
+        for (let row = 0; row < this.rows; row++) {
             if (board[col][row] > 0) {
                 return row - 1
             }
@@ -138,22 +138,25 @@ export class Connect4 {
 
 
     private evaluate(turn: number, board: number[][]): number {
+        let score = 0;
         for (let i = 0; i < this.cols; i++) {
             for (let j = 0; j < this.rows; j++) {
                 if (board[i][j] === turn % 2 + 1) {
                     const result = this.checkWinOrDraw(i, j, board, turn);
                     switch (result) {
                         case RED_WIN:
-                            return -10;
+                            score -= 10;
+                            break;
                         case YELLOW_WIN:
-                            return 10;
+                            score += 10;
+                            break;
                         case GAME_DRAW:
                             return 1;
                     }
                 }
             }
         }
-        return 0;
+        return score;
     }
 
     private applyMove(board: number[][], move: Move, turn: number): number[][] {
@@ -186,7 +189,7 @@ export class Connect4 {
                     }
                     a = Math.max(a, maxScore);
                     if (b <= a) {
-                        // break;
+                        break;
                     }
                 }
             }
@@ -203,9 +206,9 @@ export class Connect4 {
                         minScore = score;
                         bestMove = { col: col, row: row };
                     }
-                    b = Math.min(a, minScore);
+                    b = Math.min(b, minScore);
                     if (b <= a) {
-                        // break;
+                        break;
                     }
                 }
             }

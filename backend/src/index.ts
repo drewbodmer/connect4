@@ -1,9 +1,17 @@
 import express, { Request, Response } from 'express'
 import { Connect4 } from './connect4';
+import cors from 'cors'
 
 const app = express()
 const PORT = process.env.PORT || 5001
+app.use(cors({
+  origin: 'http://localhost:5173', // Frontend port needs to match
+  methods: ['GET', 'POST'],
+  credentials: true,
+  allowedHeaders: ['Content-Type']
+}))
 app.use(express.json())
+
 const game = new Connect4()
 
 app.get('/game-state', (req: Request, res: Response) => {

@@ -1,3 +1,29 @@
+# Setup
+This project uses node `v22.12.0` and npm `11.0.0`
+
+### Clone the repository
+```
+git clone git@github.com:drewbodmer/connect4.git
+```
+
+### Backend setup
+```
+cd connect4/backend
+npm install
+npx ts-node src/index.ts
+```
+You should see a message: "Server is running on http://localhost:5001"
+
+### Frontend setup
+Open up a new shell and go to the project root directory.
+```
+cd connect4/frontend
+npm install
+npm run dev
+```
+Open `http://localhost:5173/` on your browser to view the game.
+
+
 # Connect 4 Planning Notes
 
 ## Overview and first thoughts

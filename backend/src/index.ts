@@ -27,7 +27,8 @@ app.post('/play-move', (req: Request, res: Response) => {
     res.status(400).json({ error: 'Invalid column index. Must be between 0 and 6.' });
   }
 
-  const result = game.playMove(column);
+  // const result = game.playMove(column);
+  const result = game.playWithAI(column);
   res.json(result);
 })
 

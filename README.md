@@ -1,3 +1,29 @@
+# Setup
+This project uses node `v22.12.0` and npm `11.0.0`
+
+### Clone the repository
+```
+git clone git@github.com:drewbodmer/connect4.git
+```
+
+### Backend setup
+```
+cd connect4/backend
+npm install
+npx ts-node src/index.ts
+```
+You should see a message: "Server is running on http://localhost:5001"
+
+### Frontend setup
+Open up a new shell and go to the project root directory.
+```
+cd connect4/frontend
+npm install
+npm run dev
+```
+Open `http://localhost:5173/` on your browser to view the game.
+
+
 # Connect 4 Planning Notes
 
 ## Overview and first thoughts
@@ -48,7 +74,7 @@ def play_move(col):
 *I'm object-orienting the backend, while I don't generally love mutation the game is small enough its not worth passing parameters around everywhere to make it functional IMO and I'm less familiar with making a game using functional programming, so OOD will save me time.*
 
 ## Frontend thoughts:
-I'm not confident in my ability to do anything complicated with frontend, so I'm going to avoid making anything complicated and keep every piece of logic on the backend. This means I'll want to return status messages from the backend that can just be displayed directly, for example a "continue" message would just be a tip for how to play. Also, since we need to reproduce across tabs, no data can be stored in hooks or anything.
+Since the game state should be completely stored on the backend, the frontend's job will be to only display data and pass moves back and forth.
 
 We'll need to fetch initial state from backend, and a polling setup so multiple tabs stay synced.
 
@@ -65,7 +91,7 @@ I think the best option with more time would be an RL agent trained against itse
 1. Player win
 2. Other player win
 3. Creating a chain (longer is better) 
-4. Playing where there more available spaces is better, but would require a new function to find availability. We could just have some heuristic to add a point if we're playing near the middle of the board
+4. Playing where there more available spaces is better, but would require a new function to find availability. We could just have some heuristic to score higher if we're playing near the middle of the board
 
 ## Infra to enable agent
 We'll need a toggle to tell us whether we're playing 2player or against the computer, and then a check after playMove that determines 1) should the computer play and 2) is it their move. Then the AI function can just call playMove once it has determined the move.

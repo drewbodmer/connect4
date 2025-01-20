@@ -53,3 +53,22 @@
     gap: 10px;
     margin-bottom: 20px;
   }
+
+  .clear-button, .submit-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 1rem;
+  }
+  
+  .clear-button {
+    background-color: #b43333;
+    color: white;
+  }
+  
+  .submit-button {
+    background-color: #73a059;
+    color: white;
+  }

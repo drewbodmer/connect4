@@ -6,10 +6,6 @@ const PORT = process.env.PORT || 5001
 app.use(express.json())
 const game = new Connect4()
 
-app.get('/', (req: Request, res: Response) => {
-  res.send('Hello from the backend!')
-})
-
 app.get('/game-state', (req: Request, res: Response) => {
   const result = game.getGameState();
   res.json(result);
@@ -21,14 +17,18 @@ app.post('/clear-board', (req: Request, res: Response) => {
 })
 
 app.post('/play-move', (req: Request, res: Response) => {
-  const { column } = req.body
+  const { col, ai } = req.body
   
-  if (typeof column !== 'number' || column < 0 || column > 6) {
+  if (typeof col !== 'number' || col < 0 || col> 6) {
     res.status(400).json({ error: 'Invalid column index. Must be between 0 and 6.' });
   }
 
-  // const result = game.playMove(column);
-  const result = game.playWithAI(column);
+  let result;
+  if (ai) {
+    result = game.playWithAI(col);
+  } else {
+    result = game.playMove(col);
+  }
   res.json(result);
 })
 

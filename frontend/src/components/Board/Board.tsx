@@ -28,6 +28,7 @@ const Board: React.FC = () => {
   const [board, setBoard] = useState<BoardState>([])
   const [gameStatus, setGameStatus] = useState<string>('');
   const [playerTurn, setPlayerTurn] = useState<number>(0);
+  const [playAgainstAI, setPlayAgainstAI] = useState<boolean>(false);
 
   function assignState(data: GameStateResponse): void {
     setBoard(data.board);
@@ -42,7 +43,7 @@ const Board: React.FC = () => {
         assignState(data);
       } catch (error) {
         console.error('Error fetching game state:', error)
-      } 
+      }
     }
 
     fetchGameState()
@@ -59,9 +60,14 @@ const Board: React.FC = () => {
     }
   }
 
+  function toggleAi() {
+    setPlayAgainstAI(!playAgainstAI);
+    clearBoard();
+  }
+
   async function handlePlayMove(column: number) {
     try {
-      const data: GameStateResponse = await fetchFromEndpoint('play-move', 'POST', JSON.stringify({ column }));
+      const data: GameStateResponse = await fetchFromEndpoint('play-move', 'POST', JSON.stringify({ col: column, ai: playAgainstAI }));
       assignState(data);
     } catch (error) {
       console.error('Error making move:', error)
@@ -75,26 +81,31 @@ const Board: React.FC = () => {
         <div className={`cell player${playerTurn % 2 + 1}`}></div>
       </div>
       <div className="board-container">
-          <>
-            <div className="game-board">
-              {board.map((column, colIndex) => (
-                <div
-                  key={colIndex}
-                  className="column"
-                  onClick={() => handlePlayMove(colIndex)}
-                >
-                  {column.map((cell, rowIndex) => (
-                    <div
-                      key={`${colIndex}-${rowIndex}`}
-                      className={`cell player${cell}`}
-                    />
-                  ))}
-                </div>
-              ))}
-            </div>
-            {gameStatus && <div className="game-status">{gameStatus}</div>}
+        <>
+          <div className="game-board">
+            {board.map((column, colIndex) => (
+              <div
+                key={colIndex}
+                className="column"
+                onClick={() => handlePlayMove(colIndex)}
+              >
+                {column.map((cell, rowIndex) => (
+                  <div
+                    key={`${colIndex}-${rowIndex}`}
+                    className={`cell player${cell}`}
+                  />
+                ))}
+              </div>
+            ))}
+          </div>
+          {gameStatus && <div className="game-status">{gameStatus}</div>}
+          <div className="button-container">
             <button className="clear-button" onClick={() => clearBoard()}>Clear Board</button>
-          </>
+            <button className="submit-button" onClick={() => toggleAi()}>
+              {playAgainstAI ? 'Play 2-player' : 'Play against AI'}
+            </button>
+          </div>
+        </>
       </div>
     </>
   )

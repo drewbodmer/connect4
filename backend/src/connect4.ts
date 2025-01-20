@@ -136,6 +136,20 @@ export class Connect4 {
         return { result: this.result, board: this.board, playerTurn: this.turn }
     }
 
+    private scoreInCenter(board: number[][], turn: number): number {
+        let centerCount = 0;
+        const centerCols = [2,3,4]; // these columns give a player more options
+        for (let centerCol in centerCols) {
+            for (let row = 0; row < this.rows; row++) {
+                if (board[centerCols[centerCol]][row] === 2) {
+                    centerCount++;
+                } else if (board[centerCol][row] === 1) {
+                    // centerCount--;
+                }
+            }
+        }
+        return centerCount * 3;
+    }
 
     private evaluate(turn: number, board: number[][]): number {
         let score = 0;
@@ -145,19 +159,20 @@ export class Connect4 {
                     const result = this.checkWinOrDraw(i, j, board, turn);
                     switch (result) {
                         case RED_WIN:
-                            score -= 10;
+                            score -= 100;
                             break;
                         case YELLOW_WIN:
-                            score += 10;
+                            score += 100;
                             break;
                         case GAME_DRAW:
-                            return 1;
+                            return 0;
                     }
                 }
             }
         }
-        return score;
-    }
+        let centerScore = this.scoreInCenter(board, turn);
+        return score + centerScore;
+     }
 
     private applyMove(board: number[][], move: Move, turn: number): number[][] {
         const newBoard = board.map(column => [...column]);
